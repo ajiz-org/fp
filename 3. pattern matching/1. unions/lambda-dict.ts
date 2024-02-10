@@ -1,7 +1,10 @@
 type User = { id: number, name: string }
 const users: User[] = [{ id: 1, name: "Ali" }, { id: 2, name: "Salah" }]
 
-type Result<R, E> = <V>(handlers: { success: (x: R) => V, failure: (y: E) => V }) => V
+type Result<R, E> = <V>(handlers: {
+  success: (x: R) => V,
+  failure: (y: E) => V 
+}) => V
 
 type Error = { message: string }
 

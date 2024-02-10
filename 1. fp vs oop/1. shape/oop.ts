@@ -23,7 +23,7 @@ class Circle implements Shape {
   }
 }
 
-function showShapeCharacteristics(shape: Shape) {
+function show(shape: Shape) {
   console.log(`
   Area: ${shape.area()}
   Perimeter: ${shape.perimeter()}
@@ -33,7 +33,34 @@ function showShapeCharacteristics(shape: Shape) {
 const circle = new Circle(5);
 const square = new Square(5);
 
-showShapeCharacteristics(circle);
-showShapeCharacteristics(square);
+show(circle);
+show(square);
 
 export {}
+
+
+type Animal<T> = {
+  makeNoise: (animal: T) => string
+}
+
+type Dog = {type: 'dog'}
+type Cat = {type: 'Cat'}
+
+const catIsAnimal: Animal<Cat> = {
+  makeNoise: (cat) => 'Miaw'
+}
+
+const dogIsAnimal: Animal<Dog> = {
+  makeNoise: (dog) => 'Dog'
+}
+
+
+const printNoise = <T>(animal: T, impl: Animal<T>) => {
+  console.log('the noise:', impl.makeNoise(animal))
+}
+
+const cat: Cat = {type: 'Cat'}
+printNoise(cat, catIsAnimal)
+
+
+

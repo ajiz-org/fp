@@ -7,10 +7,11 @@ type Error = { message: string }
 
 type GetUserById = (id: number) => Or<User, Error>
 
-const getUserById: GetUserById = id => (firstConsumer, secondConsumer) => {
+const getUserById: GetUserById = id => (successHandler, failureHandler) => {
   const user = users.find(u => u.id == id)
-  if (!user) return secondConsumer({ message: "User Not Found" })
-  return firstConsumer(user)
+  if (!user) return failureHandler({ message: "User Not Found" })
+  const v = successHandler(user)
+  return v
 }
 
 const main = () => {

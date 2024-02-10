@@ -5,25 +5,33 @@ class User {
 
 const users = [new User(1, "Ali"), new User(2, "Salah")]
 
+class NotFound extends Error {
+  constructor() {
+    super("User Not Found");
+  }
+
+}
+
 class UserApi {
   getUserById(id: number) {
     const user = users.find(u => u.id == id)
-    if (!user) return new Error("User Not Found")
+    if (!user) return new NotFound()
     return user
   }
 }
 
 
-const main = () => {
+const main = (id: number) => {
   const api = new UserApi()
-  const user = api.getUserById(4)
-  if (user instanceof User) {
-    console.log("Hi", user.name)
+  const response = api.getUserById(id)
+  if (response instanceof User) {
+    console.log("Hi", response.name)
   } else {
-    console.log("Error: ", user.message)
+    const  _ =response
+    console.log("Error: User Not Found")
   }
 }
 
-main()
+main(4)
 
 export { }

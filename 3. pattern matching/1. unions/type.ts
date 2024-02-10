@@ -6,3 +6,5 @@ export type Match = <V extends readonly [string, unknown], T extends Record<V[0]
   [key, value]: V) => <R>(
     options: { [P in V[0]]: (x: T[P]) => R }
   ) => R
+
+export type Cast = <V extends readonly [string, unknown], T extends Record<V[0], unknown>>(v: V, _: { [P in V[0]]: (x: T[P]) => unknown; }) => Enum<T, V[0]>
