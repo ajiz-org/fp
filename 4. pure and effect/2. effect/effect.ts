@@ -1,3 +1,5 @@
+import fetch, { Response } from 'node-fetch';
+
 type PrimEffect<T> = () => T
 export type Effect<T> = { _?: T }
 

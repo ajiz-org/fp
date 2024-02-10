@@ -1,6 +1,15 @@
 {
   "type": "module",
+  "scripts": {
+    "test-effect": "ts-node-esm 4.\\ pure\\ and\\ effect/2.\\ effect/main"
+  },
   "dependencies": {
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.17",
+    "@types/node-fetch": "^2.6.11",
+    "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   }
 }

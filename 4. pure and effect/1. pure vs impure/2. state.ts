@@ -32,6 +32,6 @@ const testImpure2 = async () => {
 }
 
 testImpure1()
-await testImpure2()
+testImpure2()
 
 export { }
