@@ -3,32 +3,27 @@ import fetch, { Response } from 'node-fetch';
 type PrimEffect<T> = () => T
 export type Effect<T> = { _?: T }
 
+const run = <T>(f: Effect<T>) => (f as PrimEffect<T>)()
+const out = <T>(f: PrimEffect<T>) => f as Effect<T>
+
 export const bind = <T, U>(f: Effect<T>, g: (x: T) => Effect<U>): Effect<U> => {
-    const f2 = f as PrimEffect<T>
-    const g2 = g as (x: T) => PrimEffect<U>
-    const h: PrimEffect<U> = () => g2(f2())()
-    return h as Effect<U>
+    return out(() => run(g(run(f))))
 }
 
 
 export const log = (x: string): Effect<void> => {
-    const effect = () => console.log(x)
-    return effect as Effect<void>
+    return out(() => console.log(x))
 }
 
 
 export const then = <T, V>(x: Promise<T>, cb: (x: T) => Effect<Promise<V>>): Effect<Promise<V>> => {
-    const cb2 = cb as (x: T) => PrimEffect<Promise<V>>
-    const effect: PrimEffect<Promise<V>> = () => x.then(x => cb2(x)())
-    return effect as Effect<Promise<V>>
+    return out(() => x.then(x => run(cb(x))))
 }
 
 export const getUrl = (url: string): Effect<Promise<Response>> => {
-    const effect: PrimEffect<Promise<Response>> = () => fetch(url)
-    return effect as Effect<Promise<Response>>
+    return out(() => fetch(url))
 }
 
 export const pure = <T>(x: T): Effect<T> => {
-    const effect = () => x
-    return effect as Effect<T>
+    return out(() => x)
 }
